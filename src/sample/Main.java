@@ -21,8 +21,6 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        path = "file:\\\\" + System.getProperty("user.dir");
-
         _primaryStage = primaryStage;
 
         Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
@@ -76,11 +74,8 @@ public class Main extends Application {
         GridPane problemPane = new GridPane();
 
         for(int counter = 0; counter < 3; counter++) {
-
-            System.out.println(path);
-
             int rand = (int)(Math.random() * 53);
-            ImageView newImage = new ImageView(path + "src\\" + Integer.toString(counter-1) + ".png");
+            ImageView newImage = new ImageView("./images/" + rand + ".png");
             problemPane.add(newImage, counter, 1);
         }
 
