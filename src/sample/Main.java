@@ -5,18 +5,22 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import javafx.event.*;
 import javafx.scene.*;
-
+import java.io.File;
 public class Main extends Application {
 
     Stage _primaryStage;
     Scene startScene;
+    String path;
 
     @Override
     public void start(Stage primaryStage) throws Exception{
+        path = "file:\\\\" + System.getProperty("user.dir");
+
         _primaryStage = primaryStage;
 
         Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
@@ -56,7 +60,6 @@ public class Main extends Application {
             _primaryStage.show();
         });
 
-
         startPane.add(q1button,0,0);
         startPane.add(q2button,1,0);
         startPane.add(q3button,2,0);
@@ -70,6 +73,14 @@ public class Main extends Application {
     public Scene Question1Setup(Parent root){
         GridPane problemPane = new GridPane();
 
+        for(int counter = 0; counter < 3; counter++) {
+
+            System.out.println(path);
+
+            int rand = (int)(Math.random() * 53);
+            ImageView newImage = new ImageView(path + "src\\" + Integer.toString(counter-1) + ".png");
+            problemPane.add(newImage, counter, 1);
+        }
 
         Button returnButton = new Button("Return");
 
