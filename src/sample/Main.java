@@ -5,6 +5,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
@@ -97,7 +99,36 @@ public class Main extends Application {
     public Scene Question2Setup(Parent root){
         GridPane problemPane = new GridPane();
 
+        Label investmentLabel = new Label("Investment Amount: ");
+        Label yearsLabel = new Label("Years: ");
+        Label annualIntrestLabel= new Label("Annual Intrest Rate: ");
+        Label futureLabel = new Label("Future Value: ");
+
+        TextField investmentField = new TextField();
+        TextField yearsField = new TextField();
+        TextField annualIntrestField = new TextField();
+        Label futureField = new Label("");
+
+        Button calculate = new Button ("Calculate");
+        calculate.setOnAction(value ->  {
+            double result = 0.0;
+            result = Double.parseDouble(investmentField.getText()) * (Double.parseDouble(yearsField.getText()) - Double.parseDouble(annualIntrestField.getText()));
+            futureField.setText(Double.toString(result));
+        });
+
         Button returnButton = new Button("Return");
+
+        problemPane.add(investmentLabel,0,1);
+        problemPane.add(yearsLabel,0,2);
+        problemPane.add(annualIntrestLabel,0,3);
+        problemPane.add(futureLabel,0,4);
+
+        problemPane.add(investmentField,1,1);
+        problemPane.add(yearsField,1,2);
+        problemPane.add(annualIntrestField,1,3);
+        problemPane.add(futureField,1,4);
+
+        problemPane.add(calculate,1,5);
 
         returnButton.setOnAction(value ->  {
             _primaryStage.setScene(startScene);
@@ -110,6 +141,8 @@ public class Main extends Application {
     }
     public Scene Question3Setup(Parent root){
         GridPane problemPane = new GridPane();
+
+
 
         Button returnButton = new Button("Return");
 
@@ -136,8 +169,6 @@ public class Main extends Application {
         Scene problemScene = new Scene(problemPane);
         return problemScene;
     }
-
-
 
     public static void main(String[] args) {
         launch(args);
