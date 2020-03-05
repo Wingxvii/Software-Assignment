@@ -25,12 +25,12 @@ import javafx.stage.FileChooser;
 
 public class Main extends Application {
 
-    double radius = 10;
 
     Stage _primaryStage;
     Scene startScene;
 
     //problem 3 data
+    double radius = 10;
     Circle bigCircle = new Circle(120,120,100, Color.WHITE);
     Circle smallCircle1 = new Circle(120,20,10,Color.RED);
     Circle smallCircle2 = new Circle(20,120,10,Color.RED);
@@ -131,7 +131,7 @@ public class Main extends Application {
         Button calculate = new Button ("Calculate");
         calculate.setOnAction(value ->  {
             double result = 0.0;
-            result = Double.parseDouble(investmentField.getText()) * (Double.parseDouble(yearsField.getText()) - Double.parseDouble(annualIntrestField.getText()));
+            result = Double.parseDouble(investmentField.getText()) * Math.pow(Double.parseDouble(annualIntrestField.getText()),Double.parseDouble(yearsField.getText()));
             futureField.setText(Double.toString(result));
         });
 
