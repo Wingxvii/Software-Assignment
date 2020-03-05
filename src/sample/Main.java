@@ -11,15 +11,17 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import javafx.event.*;
-import javafx.scene.*;
-import java.io.File;
+import java.io.*;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
 import javafx.geometry.Point2D;
+import javafx.scene.chart.BarChart;
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.XYChart;
+import javafx.stage.FileChooser;
 
 public class Main extends Application {
 
@@ -216,8 +218,57 @@ public class Main extends Application {
         Scene problemScene = new Scene(outterProblemPane, 300, 250);
         return problemScene;
     }
-    public Scene Question4Setup(Parent root){
+    public Scene Question4Setup(Parent root ){
         GridPane problemPane = new GridPane();
+        FileChooser fileChooser = new FileChooser();
+
+        final CategoryAxis xAxis = new CategoryAxis();
+        final NumberAxis yAxis = new NumberAxis();
+        final BarChart<String,Number> bc = new BarChart<String,Number>(xAxis,yAxis);
+        bc.setTitle("All Letters");
+        xAxis.setLabel("Letters");
+        yAxis.setLabel("Value");
+        //problem 4 data
+
+        int[] chars = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+        updateGraph(chars, bc);
+
+        Button fileChooserButton = new Button("Select Text File");
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Text Files", "*.txt");
+        fileChooser.getExtensionFilters().add(extFilter);
+
+        fileChooserButton.setOnAction(e -> {
+            File selectedFile = fileChooser.showOpenDialog(_primaryStage);
+            try {
+                BufferedReader br = new BufferedReader(new FileReader(selectedFile.toString()));
+                String st;
+                int[] allchars = new int[26];
+
+                while ((st = br.readLine()) != null){
+
+                    char[] dataChar = st.toCharArray();
+
+                    for(char letter : dataChar){
+                        if((int)letter >= 65 && (int)letter <=90){
+                            allchars[((int)letter) - 65]++;
+                        }
+                        if((int)letter >= 97 && (int)letter <=122){
+                            allchars[((int)letter) - 97]++;
+                        }
+                    }
+                }
+
+                updateGraph(allchars, bc);
+
+            }catch(FileNotFoundException ex){
+                System.out.println("Error");
+            }catch (IOException ex){
+                System.out.println("Error");
+            }
+        });
+
+        problemPane.add(fileChooserButton,0,2);
+        problemPane.add(bc,0,1);
 
         Button returnButton = new Button("Return");
 
@@ -266,6 +317,41 @@ public class Main extends Application {
         line3.setEndX(smallCircle3.getCenterX());
         line3.setStartY(smallCircle2.getCenterY());
         line3.setEndY(smallCircle3.getCenterY());
+    }
+
+    //update function for q4
+    void updateGraph(int[] letters, BarChart<String,Number> bc){
+        XYChart.Series series1 = new XYChart.Series();
+
+        series1.getData().add(new XYChart.Data("A", letters[0]));
+        series1.getData().add(new XYChart.Data("B", letters[1]));
+        series1.getData().add(new XYChart.Data("C", letters[2]));
+        series1.getData().add(new XYChart.Data("D", letters[3]));
+        series1.getData().add(new XYChart.Data("E", letters[4]));
+        series1.getData().add(new XYChart.Data("F", letters[5]));
+        series1.getData().add(new XYChart.Data("G", letters[6]));
+        series1.getData().add(new XYChart.Data("H", letters[7]));
+        series1.getData().add(new XYChart.Data("I", letters[8]));
+        series1.getData().add(new XYChart.Data("J", letters[9]));
+        series1.getData().add(new XYChart.Data("K", letters[10]));
+        series1.getData().add(new XYChart.Data("L", letters[11]));
+        series1.getData().add(new XYChart.Data("M", letters[12]));
+        series1.getData().add(new XYChart.Data("N", letters[13]));
+        series1.getData().add(new XYChart.Data("O", letters[14]));
+        series1.getData().add(new XYChart.Data("P", letters[15]));
+        series1.getData().add(new XYChart.Data("Q", letters[16]));
+        series1.getData().add(new XYChart.Data("R", letters[17]));
+        series1.getData().add(new XYChart.Data("S", letters[18]));
+        series1.getData().add(new XYChart.Data("T", letters[19]));
+        series1.getData().add(new XYChart.Data("U", letters[20]));
+        series1.getData().add(new XYChart.Data("V", letters[21]));
+        series1.getData().add(new XYChart.Data("W", letters[22]));
+        series1.getData().add(new XYChart.Data("X", letters[23]));
+        series1.getData().add(new XYChart.Data("Y", letters[24]));
+        series1.getData().add(new XYChart.Data("Z", letters[25]));
+
+        bc.getData().clear();
+        bc.getData().addAll(series1);
     }
 
     /**
